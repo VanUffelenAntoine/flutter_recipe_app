@@ -35,7 +35,7 @@ class _MealsListState extends State<MealsList>{
         if (snapshot.hasData) {
           return Scaffold(
             appBar: AppBar(
-              title: const Text('Recipes for CategoryName'),
+              title: Text('Recipes for ${widget.category}'),
             ),
             body: Center(
                 child: ListView.builder(

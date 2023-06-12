@@ -1,50 +1,69 @@
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:meal_app/models/MealDetailed.dart';
 import 'package:meal_app/utils/api.dart';
 
-import '../models/Meal.dart';
-import '../widgets/CustomDrawer.dart';
-import '../widgets/MealsCard.dart';
-
-class MealsList extends StatefulWidget {
-  const MealsList({super.key, required this.id});
+class MealDetails extends StatefulWidget {
+  const MealDetails({super.key, required this.id});
 
   final int id;
 
   @override
-  State<StatefulWidget> createState() => _MealsListState();
-
+  State<StatefulWidget> createState() => _MealDetailsState();
 }
 
-class _MealsListState extends State<MealsList>{
+class _MealDetailsState extends State<MealDetails> {
   late Future<MealDetailed> meals;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     meals = fetchSingleMealById(widget.id);
   }
 
   @override
-  Widget build (BuildContext context){
+  Widget build(BuildContext context) {
     return FutureBuilder<MealDetailed>(
       future: meals,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return Scaffold(
-            appBar: AppBar(
-              title: const Text('Recipes for CategoryName'),
-            ),
-            body: Center(
-                child: ListView.builder(
-                    itemCount: snapshot.data?.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return MealsCard(meal: snapshot.data![index]);
-                    })),
-            drawer: const CustomDrawer(),
-          );
+              appBar: AppBar(
+                title: Text(snapshot.data!.meal),
+              ),
+              body: ListView(
+                padding: EdgeInsets.all(8),
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        children: [
+                          Text('Category: ${snapshot.data!.category}'),
+                          const SizedBox(height: 10),
+                          Text('Origin: ${snapshot.data!.area}'),
+                        ],
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          ConstrainedBox(
+                            constraints: const BoxConstraints(
+                              maxWidth: 250,
+                            ),
+                            child: Image.network(snapshot.data!.thumb),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 25),
+                  Row(
+                    children: [
+                      Flexible(child: Text(snapshot.data!.instructions))
+                    ],
+                  )
+                ],
+              ));
         } else if (snapshot.hasError) {
           return Text('${snapshot.error}');
         }

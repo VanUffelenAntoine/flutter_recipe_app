@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meal_app/screens/MealDetails.dart';
 import 'package:meal_app/screens/categories.dart';
 import 'package:meal_app/screens/Meals.dart';
 import 'package:meal_app/widgets/CustomDrawer.dart';
@@ -102,7 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: const [
                   Text('Press the '),
                   Icon(Icons.menu),
-                  Text(' to get started!')
+                  Text(' to get started!'),
                 ],
               )
             ],

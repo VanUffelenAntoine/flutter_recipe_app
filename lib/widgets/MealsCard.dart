@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:meal_app/screens/MealDetails.dart';
 
 import '../models/Meal.dart';
 
@@ -23,6 +24,9 @@ class _MealsCardState extends State<MealsCard> {
             leading: Image.network(widget.meal.thumb),
             title: Text(widget.meal.meal),
             subtitle: const Text('Tap to view details'),
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => MealDetails(id: widget.meal.id )));
+            },
           ),
         ],
       ),
