@@ -39,10 +39,19 @@ class _MealDetailsState extends State<MealDetails> {
                       children: [
                         Column(
                           children: [
-                            Text('Category: ${snapshot.data!.category}'),
-                            const SizedBox(height: 10),
-                            Text('Origin: ${snapshot.data!.area}'),
-                            const SizedBox(height: 10),
+                            ConstrainedBox(
+                              constraints: const BoxConstraints(
+                                maxWidth: 125
+                              ),
+                              child: Column(
+                                children: [
+                                  Text('Category: ${snapshot.data!.category}'),
+                                  const SizedBox(height: 10),
+                                  Text('Origin: ${snapshot.data!.area}'),
+                                  const SizedBox(height: 10),
+                                ],
+                              ),
+                            ),
                             _ingredientsList(snapshot.data!.ingredientsWMeasure)
                           ],
                         ),
@@ -86,12 +95,13 @@ Widget _ingredientsList(ingreds) {
     child: ListView.builder(
         itemCount: ingreds.length,
         itemBuilder: (context, index) {
+          var listNr = index+1;
           var ingredsList = ingreds.entries.toList();
           return ListTile(
             contentPadding: EdgeInsets.zero,
             dense: true,
             title: Text(
-              '$index.  ${ingredsList[index].key}',
+              '$listNr.  ${ingredsList[index].key}',
               style: const TextStyle(fontSize: 12),
             ),
             subtitle: Text('${ingredsList[index].value}',
