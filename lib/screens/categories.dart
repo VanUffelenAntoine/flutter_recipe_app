@@ -1,6 +1,8 @@
+
 import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:meal_app/utils/api.dart';
+import 'package:meal_app/widgets/CustomCachedNetworkImage.dart';
 import 'package:meal_app/widgets/CustomDrawer.dart';
 import 'package:meal_app/widgets/CustomProgressIndicator.dart';
 
@@ -19,11 +21,11 @@ class _CategoriesState extends State<Categories> {
   String searchValue = "";
   final _suggestions = <String>[];
 
-  ListView filteredSearch(snapshot){
-    if (searchValue != ''){
+  ListView filteredSearch(snapshot) {
+    if (searchValue != '') {
       final filteredList = <CategoryMeal>[];
-      for (var cat in snapshot.data){
-        if (cat.category.toLowerCase().contains(searchValue.toLowerCase())){
+      for (var cat in snapshot.data) {
+        if (cat.category.toLowerCase().contains(searchValue.toLowerCase())) {
           filteredList.add(cat);
         }
       }
@@ -45,7 +47,7 @@ class _CategoriesState extends State<Categories> {
   void initState() {
     super.initState();
     cats = fetchCategories();
-    cats.then((value){
+    cats.then((value) {
       for (var cat in value) {
         _suggestions.add(cat.category);
       }
@@ -60,12 +62,11 @@ class _CategoriesState extends State<Categories> {
         if (snapshot.hasData) {
           return Scaffold(
             appBar: EasySearchBar(
-                title: const Text('Categories'),
-                onSearch: (value) => setState(() => searchValue = value),
-                suggestions: _suggestions,
+              title: const Text('Categories'),
+              onSearch: (value) => setState(() => searchValue = value),
+              suggestions: _suggestions,
             ),
-            body: Center(
-                child: filteredSearch(snapshot)),
+            body: Center(child: filteredSearch(snapshot)),
             drawer: const CustomDrawer(),
           );
         } else if (snapshot.hasError) {
@@ -95,7 +96,7 @@ class _CategoryCardState extends State<CategoryCard> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           ListTile(
-            leading: Image.network(widget.cat.thumb),
+            leading: CustomCachedNetworkImage(url: widget.cat.thumb),
             title: Text(widget.cat.category),
             subtitle: const Text('Tap to view recipes'),
             onTap: () {

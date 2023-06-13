@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meal_app/models/MealDetailed.dart';
 import 'package:meal_app/utils/api.dart';
+import 'package:meal_app/widgets/CustomCachedNetworkImage.dart';
 import '../widgets/CustomProgressIndicator.dart';
 
 class MealDetails extends StatefulWidget {
@@ -62,7 +63,7 @@ class _MealDetailsState extends State<MealDetails> {
                                     maxWidth: 250, maxHeight: 250),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(40),
-                                  child: Image.network(snapshot.data!.thumb),
+                                  child: CustomCachedNetworkImage(url: snapshot.data!.thumb),
                                 ))
                           ],
                         ),
