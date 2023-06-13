@@ -1,12 +1,13 @@
+import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:meal_app/screens/MealDetails.dart';
-import 'package:meal_app/screens/categories.dart';
-import 'package:meal_app/screens/Meals.dart';
 import 'package:meal_app/widgets/CustomDrawer.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    EasyDynamicThemeWidget(
+        child: const MyApp())
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -16,9 +17,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Meal app',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData.light(),
+      darkTheme: ThemeData.dark(),
+      themeMode: EasyDynamicTheme.of(context).themeMode,
       home: const MyHomePage(title: "Meal app"),
     );
   }

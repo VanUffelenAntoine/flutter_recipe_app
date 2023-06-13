@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meal_app/main.dart';
+import 'package:meal_app/screens/settings.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import '../screens/categories.dart';
@@ -69,6 +70,16 @@ class _customDrawerState extends State<CustomDrawer>{
                 Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const MealsList(category: 'Beef',drawer:true))
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.settings),
+              title: const Text('Settings'),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const Settings())
                 );
               },
             ),
