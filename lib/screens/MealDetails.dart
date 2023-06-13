@@ -30,39 +30,44 @@ class _MealDetailsState extends State<MealDetails> {
               appBar: AppBar(
                 title: Text(snapshot.data!.meal),
               ),
-              body: ListView(
-                padding: EdgeInsets.all(8),
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        children: [
-                          Text('Category: ${snapshot.data!.category}'),
-                          const SizedBox(height: 10),
-                          Text('Origin: ${snapshot.data!.area}'),
-                        ],
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          ConstrainedBox(
-                            constraints: const BoxConstraints(
-                              maxWidth: 250,
-                            ),
-                            child: Image.network(snapshot.data!.thumb),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 25),
-                  Row(
-                    children: [
-                      Flexible(child: Text(snapshot.data!.instructions))
-                    ],
-                  )
-                ],
+              body: SingleChildScrollView(
+                padding: const EdgeInsets.all(8),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          children: [
+                            Text('Category: ${snapshot.data!.category}'),
+                            const SizedBox(height: 10),
+                            Text('Origin: ${snapshot.data!.area}'),
+                            const SizedBox(height: 10),
+                            _ingredientsList(snapshot.data!.ingredientsWMeasure)
+                          ],
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            ConstrainedBox(
+                                constraints: const BoxConstraints(
+                                    maxWidth: 250, maxHeight: 250),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(40),
+                                  child: Image.network(snapshot.data!.thumb),
+                                ))
+                          ],
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 25),
+                    Row(
+                      children: [
+                        Flexible(child: Text(snapshot.data!.instructions))
+                      ],
+                    )
+                  ],
+                ),
               ));
         } else if (snapshot.hasError) {
           return Text('${snapshot.error}');
@@ -72,4 +77,26 @@ class _MealDetailsState extends State<MealDetails> {
       },
     );
   }
+}
+
+Widget _ingredientsList(ingreds) {
+  return SizedBox(
+    height: 200,
+    width: 125,
+    child: ListView.builder(
+        itemCount: ingreds.length,
+        itemBuilder: (context, index) {
+          var ingredsList = ingreds.entries.toList();
+          return ListTile(
+            contentPadding: EdgeInsets.zero,
+            dense: true,
+            title: Text(
+              '$index.  ${ingredsList[index].key}',
+              style: const TextStyle(fontSize: 12),
+            ),
+            subtitle: Text('${ingredsList[index].value}',
+                style: const TextStyle(fontSize: 10)),
+          );
+        }),
+  );
 }

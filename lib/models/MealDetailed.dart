@@ -17,7 +17,7 @@ class MealDetailed extends Meal {
 
   @override
   factory MealDetailed.fromJson(Map<String, dynamic> jsonMeal) {
-    return MealDetailed(
+    MealDetailed meal = MealDetailed(
       id: int.parse(jsonMeal['idMeal']),
       meal: jsonMeal['strMeal'] as String,
       thumb: jsonMeal['strMealThumb'] as String,
@@ -25,5 +25,19 @@ class MealDetailed extends Meal {
       area: jsonMeal['strArea'] as String,
       instructions: jsonMeal['strInstructions'] as String,
     );
+    meal.addIngredientsFromJson(jsonMeal);
+    return meal;
+  }
+
+  void addIngredientsFromJson(jsonMeal){
+    for(var i = 1; i<=21; i++){
+      if (jsonMeal['strIngredient$i'] == null || jsonMeal['strMeasure$i'] == null) {
+        break;
+      }
+      ingredientsWMeasure.addAll({
+        jsonMeal['strIngredient$i'] : jsonMeal['strMeasure$i']
+      });
+    }
+    ingredientsWMeasure.remove('');
   }
 }
