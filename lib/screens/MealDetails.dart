@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meal_app/models/MealDetailed.dart';
 import 'package:meal_app/utils/api.dart';
+import '../widgets/CustomProgressIndicator.dart';
 
 class MealDetails extends StatefulWidget {
   const MealDetails({super.key, required this.id});
@@ -40,9 +41,7 @@ class _MealDetailsState extends State<MealDetails> {
                         Column(
                           children: [
                             ConstrainedBox(
-                              constraints: const BoxConstraints(
-                                maxWidth: 125
-                              ),
+                              constraints: const BoxConstraints(maxWidth: 125),
                               child: Column(
                                 children: [
                                   Text('Category: ${snapshot.data!.category}'),
@@ -82,7 +81,7 @@ class _MealDetailsState extends State<MealDetails> {
           return Text('${snapshot.error}');
         }
         // By default, show a loading spinner.
-        return const CircularProgressIndicator();
+        return CustomProgressIndicator();
       },
     );
   }
@@ -95,7 +94,7 @@ Widget _ingredientsList(ingreds) {
     child: ListView.builder(
         itemCount: ingreds.length,
         itemBuilder: (context, index) {
-          var listNr = index+1;
+          var listNr = index + 1;
           var ingredsList = ingreds.entries.toList();
           return ListTile(
             contentPadding: EdgeInsets.zero,

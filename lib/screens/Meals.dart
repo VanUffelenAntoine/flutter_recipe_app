@@ -1,16 +1,17 @@
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:meal_app/utils/api.dart';
+import 'package:meal_app/widgets/CustomProgressIndicator.dart';
 
 import '../models/Meal.dart';
 import '../widgets/CustomDrawer.dart';
 import '../widgets/MealsCard.dart';
 
 class MealsList extends StatefulWidget {
-  const MealsList({super.key, required this.category});
+  const MealsList({super.key, required this.category, this.drawer = false});
 
   final String category;
+  final bool drawer;
 
   @override
   State<StatefulWidget> createState() => _MealsListState();
@@ -22,7 +23,6 @@ class _MealsListState extends State<MealsList>{
   
   @override
   void initState(){
-    print(widget.category);
     super.initState();
     meals = fetchMealsByCategory(widget.category);
   }
@@ -43,13 +43,13 @@ class _MealsListState extends State<MealsList>{
                     itemBuilder: (BuildContext context, int index) {
                       return MealsCard(meal: snapshot.data![index]);
                     })),
-            drawer: const CustomDrawer(),
+            drawer: widget.drawer? const CustomDrawer() : null,
           );
         } else if (snapshot.hasError) {
           return Text('${snapshot.error}');
         }
         // By default, show a loading spinner.
-        return const CircularProgressIndicator();
+        return CustomProgressIndicator();
       },
     );
   }

@@ -2,6 +2,7 @@ import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:meal_app/utils/api.dart';
 import 'package:meal_app/widgets/CustomDrawer.dart';
+import 'package:meal_app/widgets/CustomProgressIndicator.dart';
 
 import '../models/CategoryMeal.dart';
 import 'Meals.dart';
@@ -71,7 +72,7 @@ class _CategoriesState extends State<Categories> {
           return Text('${snapshot.error}');
         }
         // By default, show a loading spinner.
-        return const CircularProgressIndicator();
+        return CustomProgressIndicator();
       },
     );
   }

@@ -68,7 +68,7 @@ class _customDrawerState extends State<CustomDrawer>{
               onTap: () {
                 Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => MealsList(category: 'Beef'))
+                    MaterialPageRoute(builder: (context) => const MealsList(category: 'Beef',drawer:true))
                 );
               },
             ),
