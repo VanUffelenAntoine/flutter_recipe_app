@@ -1,5 +1,6 @@
 import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:meal_app/utils/themes.dart';
 import 'package:meal_app/widgets/CustomDrawer.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
@@ -17,8 +18,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Meal app',
-      theme: ThemeData.light(),
-      darkTheme: ThemeData.dark(),
+      theme: lightThemeData,
+      darkTheme: darkThemeData,
       themeMode: EasyDynamicTheme.of(context).themeMode,
       home: const MyHomePage(title: "Meal app"),
     );

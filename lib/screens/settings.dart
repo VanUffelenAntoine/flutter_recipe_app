@@ -12,6 +12,12 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
+  Map<String, Color> colors = {
+
+  }
+
+  String? dropdownvalue = 'Blue';
+
   @override
   void initState() {
     super.initState();
@@ -53,8 +59,15 @@ class _SettingsState extends State<Settings> {
             onChanged: (dynamic value) => EasyDynamicTheme.of(context)
                 .changeTheme(dynamic: true, dark: false),
           ),
-        ],
-        )],
+        ],),
+            SettingsGroup(title: 'Theme color', children: [
+              DropdownButton(
+                value: dropdownvalue,
+                  items: <String>['Blue', 'Red','Yellow']
+                      .map((color) => DropdownMenuItem(child: Text(color), value: color,)).toList(),
+                  onChanged: (newvalue) => {setState(() {dropdownvalue = newvalue!;})})
+            ])
+          ],
        )
       ),
       drawer: const CustomDrawer(),

@@ -22,7 +22,10 @@ class _MealsCardState extends State<MealsCard> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           ListTile(
-            leading: CustomCachedNetworkImage(url: widget.meal.thumb),
+            leading: ClipRRect(
+              borderRadius: BorderRadius.circular(80),
+              child: CustomCachedNetworkImage(url: widget.meal.thumb)
+            ),
             title: Text(widget.meal.meal),
             subtitle: const Text('Tap to view details'),
             onTap: (){
