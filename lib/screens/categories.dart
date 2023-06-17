@@ -33,13 +33,13 @@ class _CategoriesState extends State<Categories> {
       return ListView.builder(
           itemCount: filteredList.length,
           itemBuilder: (BuildContext context, int index) {
-            return CategoryCard(cat: filteredList[index]);
+            return CategoryCard(cat: filteredList[index], categories: snapshot.data,);
           });
     }
     return ListView.builder(
         itemCount: snapshot.data?.length,
         itemBuilder: (BuildContext context, int index) {
-          return CategoryCard(cat: snapshot.data![index]);
+          return CategoryCard(cat: snapshot.data![index], categories: snapshot.data);
         });
   }
 
@@ -80,9 +80,10 @@ class _CategoriesState extends State<Categories> {
 }
 
 class CategoryCard extends StatefulWidget {
-  const CategoryCard({super.key, required this.cat});
+  const CategoryCard({super.key, required this.cat, this.categories = const []});
 
   final CategoryMeal cat;
+  final List<CategoryMeal> categories;
 
   @override
   State<StatefulWidget> createState() => _CategoryCardState();
@@ -105,6 +106,7 @@ class _CategoryCardState extends State<CategoryCard> {
                   MaterialPageRoute(
                       builder: (context) => MealsList(
                             category: widget.cat.category,
+                            categories: widget.categories,
                           )));
             },
           ),
