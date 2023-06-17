@@ -54,6 +54,7 @@ class _MealsListState extends State<MealsList> {
               title: const Text('Change category: '),
               content: StatefulBuilder(builder: (BuildContext context,StateSetter setState){
                 return DropdownButton(
+                    isExpanded: true,
                     value: dropdownValue,
                     onChanged: (String? value){
                       setState(() {
