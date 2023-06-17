@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meal_app/models/MealDetailed.dart';
 import 'package:meal_app/utils/api.dart';
 import 'package:meal_app/widgets/CustomCachedNetworkImage.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import '../widgets/CustomProgressIndicator.dart';
 
 class MealDetails extends StatefulWidget {
@@ -16,10 +17,18 @@ class MealDetails extends StatefulWidget {
 class _MealDetailsState extends State<MealDetails> {
   late Future<MealDetailed> meals;
 
+  late YoutubePlayerController _controller;
+
   @override
   void initState() {
     super.initState();
     meals = fetchSingleMealById(widget.id);
+  }
+
+  @override
+  void dispose(){
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -63,16 +72,46 @@ class _MealDetailsState extends State<MealDetails> {
                                     maxWidth: 250, maxHeight: 250),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(40),
-                                  child: CustomCachedNetworkImage(url: snapshot.data!.thumb),
+                                  child: CustomCachedNetworkImage(
+                                      url: snapshot.data!.thumb),
                                 ))
                           ],
                         ),
                       ],
                     ),
                     const SizedBox(height: 25),
+                    Text('Instructions: ',
+                    style: Theme.of(context).textTheme.titleLarge,),
+
                     Row(
                       children: [
-                        Flexible(child: Text(snapshot.data!.instructions))
+                        Flexible(child: Text(snapshot.data!.instructions)),
+                      ],
+                    ),
+                    const SizedBox(height: 15),
+                    Text('Youtube tutorial: ',
+                      style: Theme.of(context).textTheme.titleLarge,),
+                    YoutubePlayer(
+                      controller: _controller = YoutubePlayerController(
+                          initialVideoId: YoutubePlayer.convertUrlToId(
+                              snapshot.data!.ytbLink) as String,
+                          flags: const YoutubePlayerFlags(
+                            mute: false,
+                            autoPlay: false,
+                            showLiveFullscreenButton: true,
+                          )),
+                      showVideoProgressIndicator: true,
+                      progressIndicatorColor: Theme.of(context).primaryColor,
+                      progressColors: ProgressBarColors(
+                        playedColor: Theme.of(context).primaryColor,
+                        handleColor: Theme.of(context).hoverColor
+                      ),
+                      bottomActions: [
+                        CurrentPosition(),
+                        ProgressBar(
+                          isExpanded: true,
+                        ),
+                        const PlaybackSpeedButton(),
                       ],
                     )
                   ],

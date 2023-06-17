@@ -39,6 +39,7 @@ dependencies:
   easy_search_bar: ^2.5.0
   easy_dynamic_theme: ^2.2.0
   cached_network_image: ^3.2.3
+  youtube_player_flutter: ^8.1.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
