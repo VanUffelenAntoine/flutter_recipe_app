@@ -18,6 +18,37 @@ class _MealDetailsState extends State<MealDetails> {
   late Future<MealDetailed> meals;
 
   late YoutubePlayerController _controller;
+  
+  youtubeUrlCheck(data){
+    print(data.ytbLink);
+    if (data.ytbLink != ''){
+      return YoutubePlayer(
+        controller: _controller = YoutubePlayerController(
+            initialVideoId: YoutubePlayer.convertUrlToId(
+                data!.ytbLink) as String,
+            flags: const YoutubePlayerFlags(
+              mute: false,
+              autoPlay: false,
+              showLiveFullscreenButton: true,
+            )),
+        showVideoProgressIndicator: true,
+        progressIndicatorColor: Theme.of(context).primaryColor,
+        progressColors: ProgressBarColors(
+            playedColor: Theme.of(context).primaryColor,
+            handleColor: Theme.of(context).hoverColor
+        ),
+        bottomActions: [
+          CurrentPosition(),
+          ProgressBar(
+            isExpanded: true,
+          ),
+          const PlaybackSpeedButton(),
+        ],
+      );
+    }
+
+    return const Text('Youtube tutorial not available');
+  }
 
   @override
   void initState() {
@@ -91,29 +122,7 @@ class _MealDetailsState extends State<MealDetails> {
                     const SizedBox(height: 15),
                     Text('Youtube tutorial: ',
                       style: Theme.of(context).textTheme.titleLarge,),
-                    YoutubePlayer(
-                      controller: _controller = YoutubePlayerController(
-                          initialVideoId: YoutubePlayer.convertUrlToId(
-                              snapshot.data!.ytbLink) as String,
-                          flags: const YoutubePlayerFlags(
-                            mute: false,
-                            autoPlay: false,
-                            showLiveFullscreenButton: true,
-                          )),
-                      showVideoProgressIndicator: true,
-                      progressIndicatorColor: Theme.of(context).primaryColor,
-                      progressColors: ProgressBarColors(
-                        playedColor: Theme.of(context).primaryColor,
-                        handleColor: Theme.of(context).hoverColor
-                      ),
-                      bottomActions: [
-                        CurrentPosition(),
-                        ProgressBar(
-                          isExpanded: true,
-                        ),
-                        const PlaybackSpeedButton(),
-                      ],
-                    )
+                    youtubeUrlCheck(snapshot.data)
                   ],
                 ),
               ));
